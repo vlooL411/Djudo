@@ -1,0 +1,627 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DjudoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Championat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ChampionatConfig">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDChampionat" Type="int" />
+          <Property Name="DateStart" Type="datetime" />
+          <Property Name="DateEnd" Type="datetime" />
+          <Property Name="AgeCategorie" Type="tinyint" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="1" />
+          <Property Name="IDTatami" Type="int" />
+          <Property Name="WeightCategorie" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Rule">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Score" Type="tinyint" />
+          <Property Name="IDSorevnovanie" Type="int" />
+          <Property Name="IDUchastCamp" Type="int" />
+          <Property Name="WaitTime" Type="float" />
+          <Property Name="Time" Type="float" />
+        </EntityType>
+        <EntityType Name="Sorevnovanie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="White" Type="int" />
+          <Property Name="Red" Type="int" />
+          <Property Name="NumGroup" Type="int" />
+          <Property Name="Winner" Type="tinyint" />
+          <Property Name="IDChampConf" Type="int" />
+          <Property Name="Start" Type="datetime" />
+          <Property Name="TimeRound" Type="float" />
+        </EntityType>
+        <EntityType Name="Tatami">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="UchastChamp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNum" Type="int" Nullable="false" />
+          <Property Name="IDChampionat" Type="int" Nullable="false" />
+          <Property Name="IDUchastnick" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Uchastnick">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Birthday" Type="nvarchar" MaxLength="50" />
+          <Property Name="Birthtown" Type="nvarchar" MaxLength="50" />
+          <Property Name="Street" Type="nvarchar" MaxLength="100" />
+          <Property Name="Hometown" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sportsclub" Type="nvarchar" MaxLength="50" />
+          <Property Name="Weight_kg" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_ChampionatConfig_Championat">
+          <End Role="Championat" Type="Self.Championat" Multiplicity="0..1" />
+          <End Role="ChampionatConfig" Type="Self.ChampionatConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Championat">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ChampionatConfig">
+              <PropertyRef Name="IDChampionat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChampionatConfig_Tatami">
+          <End Role="Tatami" Type="Self.Tatami" Multiplicity="0..1" />
+          <End Role="ChampionatConfig" Type="Self.ChampionatConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tatami">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ChampionatConfig">
+              <PropertyRef Name="IDTatami" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rule_Sorevnovanie">
+          <End Role="Sorevnovanie" Type="Self.Sorevnovanie" Multiplicity="0..1" />
+          <End Role="Rule" Type="Self.Rule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sorevnovanie">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rule">
+              <PropertyRef Name="IDSorevnovanie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rule_UchastChamp">
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="0..1" />
+          <End Role="Rule" Type="Self.Rule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UchastChamp">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rule">
+              <PropertyRef Name="IDUchastCamp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sorevnovanie_ChampionatConfig">
+          <End Role="ChampionatConfig" Type="Self.ChampionatConfig" Multiplicity="0..1" />
+          <End Role="Sorevnovanie" Type="Self.Sorevnovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChampionatConfig">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sorevnovanie">
+              <PropertyRef Name="IDChampConf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sorevnovanie_UchastChamp">
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="0..1" />
+          <End Role="Sorevnovanie" Type="Self.Sorevnovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UchastChamp">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sorevnovanie">
+              <PropertyRef Name="White" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sorevnovanie_UchastChamp1">
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="0..1" />
+          <End Role="Sorevnovanie" Type="Self.Sorevnovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UchastChamp">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sorevnovanie">
+              <PropertyRef Name="Red" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UchastChamp_ChampionatConfig">
+          <End Role="ChampionatConfig" Type="Self.ChampionatConfig" Multiplicity="1" />
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChampionatConfig">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UchastChamp">
+              <PropertyRef Name="IDChampionat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UchastChamp_Uchastnick">
+          <End Role="Uchastnick" Type="Self.Uchastnick" Multiplicity="1" />
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uchastnick">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UchastChamp">
+              <PropertyRef Name="IDUchastnick" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DjudoModelStoreContainer">
+          <EntitySet Name="Championat" EntityType="Self.Championat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChampionatConfig" EntityType="Self.ChampionatConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rule" EntityType="Self.Rule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sorevnovanie" EntityType="Self.Sorevnovanie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tatami" EntityType="Self.Tatami" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UchastChamp" EntityType="Self.UchastChamp" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Uchastnick" EntityType="Self.Uchastnick" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ChampionatConfig_Championat" Association="Self.FK_ChampionatConfig_Championat">
+            <End Role="Championat" EntitySet="Championat" />
+            <End Role="ChampionatConfig" EntitySet="ChampionatConfig" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChampionatConfig_Tatami" Association="Self.FK_ChampionatConfig_Tatami">
+            <End Role="Tatami" EntitySet="Tatami" />
+            <End Role="ChampionatConfig" EntitySet="ChampionatConfig" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rule_Sorevnovanie" Association="Self.FK_Rule_Sorevnovanie">
+            <End Role="Sorevnovanie" EntitySet="Sorevnovanie" />
+            <End Role="Rule" EntitySet="Rule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rule_UchastChamp" Association="Self.FK_Rule_UchastChamp">
+            <End Role="UchastChamp" EntitySet="UchastChamp" />
+            <End Role="Rule" EntitySet="Rule" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sorevnovanie_ChampionatConfig" Association="Self.FK_Sorevnovanie_ChampionatConfig">
+            <End Role="ChampionatConfig" EntitySet="ChampionatConfig" />
+            <End Role="Sorevnovanie" EntitySet="Sorevnovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sorevnovanie_UchastChamp" Association="Self.FK_Sorevnovanie_UchastChamp">
+            <End Role="UchastChamp" EntitySet="UchastChamp" />
+            <End Role="Sorevnovanie" EntitySet="Sorevnovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sorevnovanie_UchastChamp1" Association="Self.FK_Sorevnovanie_UchastChamp1">
+            <End Role="UchastChamp" EntitySet="UchastChamp" />
+            <End Role="Sorevnovanie" EntitySet="Sorevnovanie" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UchastChamp_ChampionatConfig" Association="Self.FK_UchastChamp_ChampionatConfig">
+            <End Role="ChampionatConfig" EntitySet="ChampionatConfig" />
+            <End Role="UchastChamp" EntitySet="UchastChamp" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UchastChamp_Uchastnick" Association="Self.FK_UchastChamp_Uchastnick">
+            <End Role="Uchastnick" EntitySet="Uchastnick" />
+            <End Role="UchastChamp" EntitySet="UchastChamp" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DjudoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Championat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChampionatConfigs" Relationship="Self.FK_ChampionatConfig_Championat" FromRole="Championat" ToRole="ChampionatConfig" />
+        </EntityType>
+        <EntityType Name="ChampionatConfig">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDChampionat" Type="Int32" />
+          <Property Name="DateStart" Type="DateTime" Precision="3" />
+          <Property Name="DateEnd" Type="DateTime" Precision="3" />
+          <Property Name="AgeCategorie" Type="Byte" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="IDTatami" Type="Int32" />
+          <Property Name="WeightCategorie" Type="Byte" />
+          <NavigationProperty Name="Championat" Relationship="Self.FK_ChampionatConfig_Championat" FromRole="ChampionatConfig" ToRole="Championat" />
+          <NavigationProperty Name="Tatami" Relationship="Self.FK_ChampionatConfig_Tatami" FromRole="ChampionatConfig" ToRole="Tatami" />
+          <NavigationProperty Name="Sorevnovanies" Relationship="Self.FK_Sorevnovanie_ChampionatConfig" FromRole="ChampionatConfig" ToRole="Sorevnovanie" />
+          <NavigationProperty Name="UchastChamps" Relationship="Self.FK_UchastChamp_ChampionatConfig" FromRole="ChampionatConfig" ToRole="UchastChamp" />
+        </EntityType>
+        <EntityType Name="Rule">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Score" Type="Byte" />
+          <Property Name="IDSorevnovanie" Type="Int32" />
+          <Property Name="IDUchastCamp" Type="Int32" />
+          <Property Name="Time" Type="Double" />
+          <NavigationProperty Name="Sorevnovanie" Relationship="Self.FK_Rule_Sorevnovanie" FromRole="Rule" ToRole="Sorevnovanie" />
+          <NavigationProperty Name="UchastChamp" Relationship="Self.FK_Rule_UchastChamp" FromRole="Rule" ToRole="UchastChamp" />
+          <Property Name="WaitTime" Type="Double" />
+        </EntityType>
+        <EntityType Name="Sorevnovanie">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="White" Type="Int32" />
+          <Property Name="Red" Type="Int32" />
+          <Property Name="NumGroup" Type="Int32" />
+          <Property Name="Winner" Type="Byte" />
+          <Property Name="IDChampConf" Type="Int32" />
+          <Property Name="TimeRound" Type="Double" />
+          <NavigationProperty Name="ChampionatConfig" Relationship="Self.FK_Sorevnovanie_ChampionatConfig" FromRole="Sorevnovanie" ToRole="ChampionatConfig" />
+          <NavigationProperty Name="Rules" Relationship="Self.FK_Rule_Sorevnovanie" FromRole="Sorevnovanie" ToRole="Rule" />
+          <NavigationProperty Name="UchastChamp" Relationship="Self.FK_Sorevnovanie_UchastChamp" FromRole="Sorevnovanie" ToRole="UchastChamp" />
+          <NavigationProperty Name="UchastChamp1" Relationship="Self.FK_Sorevnovanie_UchastChamp1" FromRole="Sorevnovanie" ToRole="UchastChamp" />
+          <Property Name="Start" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Tatami">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ChampionatConfigs" Relationship="Self.FK_ChampionatConfig_Tatami" FromRole="Tatami" ToRole="ChampionatConfig" />
+        </EntityType>
+        <EntityType Name="UchastChamp">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNum" Type="Int32" Nullable="false" />
+          <Property Name="IDChampionat" Type="Int32" Nullable="false" />
+          <Property Name="IDUchastnick" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ChampionatConfig" Relationship="Self.FK_UchastChamp_ChampionatConfig" FromRole="UchastChamp" ToRole="ChampionatConfig" />
+          <NavigationProperty Name="Rules" Relationship="Self.FK_Rule_UchastChamp" FromRole="UchastChamp" ToRole="Rule" />
+          <NavigationProperty Name="Sorevnovanies" Relationship="Self.FK_Sorevnovanie_UchastChamp" FromRole="UchastChamp" ToRole="Sorevnovanie" />
+          <NavigationProperty Name="Sorevnovanies1" Relationship="Self.FK_Sorevnovanie_UchastChamp1" FromRole="UchastChamp" ToRole="Sorevnovanie" />
+          <NavigationProperty Name="Uchastnick" Relationship="Self.FK_UchastChamp_Uchastnick" FromRole="UchastChamp" ToRole="Uchastnick" />
+        </EntityType>
+        <EntityType Name="Uchastnick">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Birthtown" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Hometown" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sportsclub" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Weight_kg" Type="Byte" />
+          <NavigationProperty Name="UchastChamps" Relationship="Self.FK_UchastChamp_Uchastnick" FromRole="Uchastnick" ToRole="UchastChamp" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_ChampionatConfig_Championat">
+          <End Role="Championat" Type="Self.Championat" Multiplicity="0..1" />
+          <End Role="ChampionatConfig" Type="Self.ChampionatConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Championat">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ChampionatConfig">
+              <PropertyRef Name="IDChampionat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChampionatConfig_Tatami">
+          <End Role="Tatami" Type="Self.Tatami" Multiplicity="0..1" />
+          <End Role="ChampionatConfig" Type="Self.ChampionatConfig" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tatami">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ChampionatConfig">
+              <PropertyRef Name="IDTatami" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sorevnovanie_ChampionatConfig">
+          <End Role="ChampionatConfig" Type="Self.ChampionatConfig" Multiplicity="0..1" />
+          <End Role="Sorevnovanie" Type="Self.Sorevnovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChampionatConfig">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sorevnovanie">
+              <PropertyRef Name="IDChampConf" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UchastChamp_ChampionatConfig">
+          <End Role="ChampionatConfig" Type="Self.ChampionatConfig" Multiplicity="1" />
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChampionatConfig">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UchastChamp">
+              <PropertyRef Name="IDChampionat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rule_Sorevnovanie">
+          <End Role="Sorevnovanie" Type="Self.Sorevnovanie" Multiplicity="0..1" />
+          <End Role="Rule" Type="Self.Rule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sorevnovanie">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rule">
+              <PropertyRef Name="IDSorevnovanie" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rule_UchastChamp">
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="0..1" />
+          <End Role="Rule" Type="Self.Rule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UchastChamp">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Rule">
+              <PropertyRef Name="IDUchastCamp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sorevnovanie_UchastChamp">
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="0..1" />
+          <End Role="Sorevnovanie" Type="Self.Sorevnovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UchastChamp">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sorevnovanie">
+              <PropertyRef Name="White" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sorevnovanie_UchastChamp1">
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="0..1" />
+          <End Role="Sorevnovanie" Type="Self.Sorevnovanie" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UchastChamp">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sorevnovanie">
+              <PropertyRef Name="Red" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UchastChamp_Uchastnick">
+          <End Role="Uchastnick" Type="Self.Uchastnick" Multiplicity="1" />
+          <End Role="UchastChamp" Type="Self.UchastChamp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uchastnick">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UchastChamp">
+              <PropertyRef Name="IDUchastnick" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DjudoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Championats" EntityType="Self.Championat" />
+          <EntitySet Name="ChampionatConfigs" EntityType="Self.ChampionatConfig" />
+          <EntitySet Name="Rules" EntityType="Self.Rule" />
+          <EntitySet Name="Sorevnovanies" EntityType="Self.Sorevnovanie" />
+          <EntitySet Name="Tatamis" EntityType="Self.Tatami" />
+          <EntitySet Name="UchastChamps" EntityType="Self.UchastChamp" />
+          <EntitySet Name="Uchastnicks" EntityType="Self.Uchastnick" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_ChampionatConfig_Championat" Association="Self.FK_ChampionatConfig_Championat">
+            <End Role="Championat" EntitySet="Championats" />
+            <End Role="ChampionatConfig" EntitySet="ChampionatConfigs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChampionatConfig_Tatami" Association="Self.FK_ChampionatConfig_Tatami">
+            <End Role="Tatami" EntitySet="Tatamis" />
+            <End Role="ChampionatConfig" EntitySet="ChampionatConfigs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sorevnovanie_ChampionatConfig" Association="Self.FK_Sorevnovanie_ChampionatConfig">
+            <End Role="ChampionatConfig" EntitySet="ChampionatConfigs" />
+            <End Role="Sorevnovanie" EntitySet="Sorevnovanies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UchastChamp_ChampionatConfig" Association="Self.FK_UchastChamp_ChampionatConfig">
+            <End Role="ChampionatConfig" EntitySet="ChampionatConfigs" />
+            <End Role="UchastChamp" EntitySet="UchastChamps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rule_Sorevnovanie" Association="Self.FK_Rule_Sorevnovanie">
+            <End Role="Sorevnovanie" EntitySet="Sorevnovanies" />
+            <End Role="Rule" EntitySet="Rules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rule_UchastChamp" Association="Self.FK_Rule_UchastChamp">
+            <End Role="UchastChamp" EntitySet="UchastChamps" />
+            <End Role="Rule" EntitySet="Rules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sorevnovanie_UchastChamp" Association="Self.FK_Sorevnovanie_UchastChamp">
+            <End Role="UchastChamp" EntitySet="UchastChamps" />
+            <End Role="Sorevnovanie" EntitySet="Sorevnovanies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sorevnovanie_UchastChamp1" Association="Self.FK_Sorevnovanie_UchastChamp1">
+            <End Role="UchastChamp" EntitySet="UchastChamps" />
+            <End Role="Sorevnovanie" EntitySet="Sorevnovanies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UchastChamp_Uchastnick" Association="Self.FK_UchastChamp_Uchastnick">
+            <End Role="Uchastnick" EntitySet="Uchastnicks" />
+            <End Role="UchastChamp" EntitySet="UchastChamps" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DjudoModelStoreContainer" CdmEntityContainer="DjudoEntities">
+          <EntitySetMapping Name="Championats">
+            <EntityTypeMapping TypeName="DjudoModel.Championat">
+              <MappingFragment StoreEntitySet="Championat">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChampionatConfigs">
+            <EntityTypeMapping TypeName="DjudoModel.ChampionatConfig">
+              <MappingFragment StoreEntitySet="ChampionatConfig">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDChampionat" ColumnName="IDChampionat" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="AgeCategorie" ColumnName="AgeCategorie" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="IDTatami" ColumnName="IDTatami" />
+                <ScalarProperty Name="WeightCategorie" ColumnName="WeightCategorie" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rules">
+            <EntityTypeMapping TypeName="DjudoModel.Rule">
+              <MappingFragment StoreEntitySet="Rule">
+                <ScalarProperty Name="WaitTime" ColumnName="WaitTime" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="IDSorevnovanie" ColumnName="IDSorevnovanie" />
+                <ScalarProperty Name="IDUchastCamp" ColumnName="IDUchastCamp" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sorevnovanies">
+            <EntityTypeMapping TypeName="DjudoModel.Sorevnovanie">
+              <MappingFragment StoreEntitySet="Sorevnovanie">
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="White" ColumnName="White" />
+                <ScalarProperty Name="Red" ColumnName="Red" />
+                <ScalarProperty Name="NumGroup" ColumnName="NumGroup" />
+                <ScalarProperty Name="Winner" ColumnName="Winner" />
+                <ScalarProperty Name="IDChampConf" ColumnName="IDChampConf" />
+                <ScalarProperty Name="TimeRound" ColumnName="TimeRound" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tatamis">
+            <EntityTypeMapping TypeName="DjudoModel.Tatami">
+              <MappingFragment StoreEntitySet="Tatami">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UchastChamps">
+            <EntityTypeMapping TypeName="DjudoModel.UchastChamp">
+              <MappingFragment StoreEntitySet="UchastChamp">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrderNum" ColumnName="OrderNum" />
+                <ScalarProperty Name="IDChampionat" ColumnName="IDChampionat" />
+                <ScalarProperty Name="IDUchastnick" ColumnName="IDUchastnick" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Uchastnicks">
+            <EntityTypeMapping TypeName="DjudoModel.Uchastnick">
+              <MappingFragment StoreEntitySet="Uchastnick">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Birthtown" ColumnName="Birthtown" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Hometown" ColumnName="Hometown" />
+                <ScalarProperty Name="Sportsclub" ColumnName="Sportsclub" />
+                <ScalarProperty Name="Weight_kg" ColumnName="Weight_kg" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DjudoModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c94f11ca6e4a4a058f8249323184adb4" Name="Diagram1">
+        <EntityTypeShape EntityType="DjudoModel.Championat" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DjudoModel.ChampionatConfig" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DjudoModel.Rule" Width="1.5" PointX="10.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DjudoModel.Sorevnovanie" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DjudoModel.Tatami" Width="1.5" PointX="0.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DjudoModel.UchastChamp" Width="1.5" PointX="8.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DjudoModel.Uchastnick" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DjudoModel.User" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <AssociationConnector Association="DjudoModel.FK_ChampionatConfig_Championat" ManuallyRouted="false" />
+        <AssociationConnector Association="DjudoModel.FK_ChampionatConfig_Tatami" ManuallyRouted="false" />
+        <AssociationConnector Association="DjudoModel.FK_Sorevnovanie_ChampionatConfig" ManuallyRouted="false" />
+        <AssociationConnector Association="DjudoModel.FK_UchastChamp_ChampionatConfig" ManuallyRouted="false" />
+        <AssociationConnector Association="DjudoModel.FK_Rule_Sorevnovanie" ManuallyRouted="false" />
+        <AssociationConnector Association="DjudoModel.FK_Rule_UchastChamp" ManuallyRouted="false" />
+        <AssociationConnector Association="DjudoModel.FK_Sorevnovanie_UchastChamp" ManuallyRouted="false" />
+        <AssociationConnector Association="DjudoModel.FK_Sorevnovanie_UchastChamp1" ManuallyRouted="false" />
+        <AssociationConnector Association="DjudoModel.FK_UchastChamp_Uchastnick" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
